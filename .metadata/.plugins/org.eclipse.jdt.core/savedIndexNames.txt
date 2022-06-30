@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+C:\Users\Tim\Desktop\Interview-Practice\.metadata\.plugins\org.eclipse.jdt.core
+3552349869.index
+3509434161.index
+1865797976.index
+760091825.index
