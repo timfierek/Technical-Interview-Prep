@@ -60,22 +60,110 @@ Given two strings, write a method to decide if one is a permutation of the other
 
 ____________________________________________________________________________________________________________________________________________________
 
-URLify (1.3): 
+*URLify (1.3): 
 Write a method to replace all spaces in a string with '%20.' You may assume that the string has sufficient space at the end to hold the additional 
 characters, and that you are given the "true" length of the string. Use a character array so that you can perform this operation in place.
-			  
+
+	// "hello world hi    "
+
+	public static String urlify(String str){
+	
+		char[] s = str.toCharArray();
+		int index = str.length()-1;
+		int pointer = str.trim().length() - 1;
+		
+		while(pointer > 0){
+			if(s[pointer] == ' '){
+				pointer--;
+				index -= 3;
+				continue;
+			}
+			else{
+				s[index] = s[pointer];
+				s[pointer] = ' ';
+				pointer--;
+				index--;
+			}
+		}
+		
+		for(int i = 0; i < s.length() - 1; i++){
+			if(s[i] == ' '){
+				s[i] = '%';
+				s[i+1] = '2';
+				s[i+2] = '0';
+				i+=2;
+			}
+		}
+		
+		return s.toString();
+	}
+	
 ____________________________________________________________________________________________________________________________________________________
 
 Palindome Permutation (1.4): 
 Given a string, write a function to check if it is as permutation of a palindrome. A palindrome is a word or phrase that is the same forwards and 
 backwards. A permutation is a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
 
+	// taco cat
+	
+	public static boolean palPerm(String str){
+		Hashtable<Character, Integer> counts = new Hashtable<>();
+		int oddCount;
+		int charCount;
+		
+		for(Character c : str.trim().toCharArray()){
+			if(counts.containsKey(c)){
+				counts.replace(c, counts.get(c) + 1);
+			}
+			else{
+				counts.put(c, 1);
+			}
+		}
+		
+		counts.remove(' ');
+		Set<Character> setOfKeys = counts.keySet();
+		
+		for(Character c : setOfKeys){
+			charCount += counts.get(c);
+			
+			if(counts.get(c) % 2 != 0){
+				oddCount++;
+			}	
+		}
+		
+		if(charCount % 2 == 0){
+			return oddCount == 0;
+		}
+		else{
+			return oddCount == 1;
+		}
+	}
+
 ____________________________________________________________________________________________________________________________________________________
 
 One Away (1.5): 
 There are three types of edits that can be performed on string: insert a character, remove a character, or replace a character. Given two strings, 
 write a function to check if they are one edit (or zero edits) away.
-				
+
+	public static boolean hasNoEdits(String str1, String str2){
+		if(Math.abs(str1.length() - str2.length()) > 1){
+			return false;
+		}
+		
+		int[] characters = new int[128];
+		
+		for(Character c : str1){
+			characters[c]++;
+		}
+		for(Character c : str2){
+			characters[c]--;
+		}
+		
+		Arrays.sum(characters);
+		if(Math.abs(characters) > 1) return false;
+		
+		return true;
+	}				
 ____________________________________________________________________________________________________________________________________________________
 
 String Compression (1.6):
